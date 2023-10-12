@@ -1,3 +1,17 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "ap-northeast-2"
+}
+
 # Bastion Host instance
 resource "aws_instance" "Bastion" {
   ami = data.aws_ami.ubuntu.id
