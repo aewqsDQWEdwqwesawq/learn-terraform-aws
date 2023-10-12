@@ -1,6 +1,6 @@
 variable "availabity_zone" {
   description = "Insert the Availability Zone according to your Subnet and PVC"
-  default = "us-east-2b"
+  default = "ap-northeast-2"
 }
 
 variable "name" {

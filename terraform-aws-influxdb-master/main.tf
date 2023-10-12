@@ -10,23 +10,6 @@ resource "aws_instance" "data_node" {
   count                  = var.data_instances
 }
 
-resource "aws_ebs_volume" "data" {
-  size              = var.data_disk_size
-  encrypted         = true
-  type              = "io1"
-  iops              = var.data_disk_iops
-  availability_zone = var.availabity_zone
-  count             = var.data_instances
-}
-
-resource "aws_volume_attachment" "data_attachment" {
-  device_name  = var.data_disk_device_name
-  volume_id    = aws_ebs_volume.data.*.id[count.index]
-  instance_id  = aws_instance.data_node.*.id[count.index]
-  count        = var.data_instances
-  force_detach = true
-}
-
 # Creates all meta nodes in the first / same subnet, this avoids splits if one AV goes offline.
 # Data nodes function fine without access to meta-nodes between shard creation.
  resource "aws_instance" "meta_node" {
