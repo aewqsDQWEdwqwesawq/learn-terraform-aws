@@ -76,6 +76,13 @@ resource "aws_route_table" "publicrt" {
   vpc_id = aws_vpc.main_vpc.id
   
 }
+
+resource "aws_route" "publicroute" {
+  route_table_id = aws_route_table.publicrt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.testig.id
+  
+}
 resource "aws_route_table" "privatert" {
   vpc_id = aws_vpc.main_vpc.id
 
