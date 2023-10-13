@@ -4,7 +4,7 @@ resource "aws_instance" "data_node" {
   instance_type          = "t2.micro"
   subnet_id              = var.subnet_id
   key_name               = var.key_name
-  user_data              = var.user_data == "" ? file("./init/data-nodes.sh") : var.user_data
+  user_data              = var.user_data == "" ? file("${path.module}/init/data-nodes.sh") : var.user_data
 //  ebs_optimized          = true
   ebs_optimized          = false
   vpc_security_group_ids = var.security_group
@@ -41,7 +41,7 @@ resource "aws_volume_attachment" "data_attachment" {
      instance_type               = "t2.micro"
      subnet_id                   = var.subnet_id
      key_name                    = var.key_name
-     user_data                   = var.user_data == "" ? file("./init/meta-nodes.sh") : var.user_data
+     user_data                   = var.user_data == "" ? file("${path.module}/init/meta-nodes.sh") : var.user_data
      vpc_security_group_ids      = var.security_group
      count                       = var.meta_instances
      ebs_optimized               = false
