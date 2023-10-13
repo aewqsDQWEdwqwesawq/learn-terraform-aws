@@ -93,7 +93,7 @@ resource "aws_route_table" "privatert2" {
   vpc_id = aws_vpc.main_vpc.id
 }
 
-resource "aws_route" "privateroute" {
+resource "aws_route" "privateroute2" {
   route_table_id = aws_route_table.privatert2.id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id = aws_nat_gateway.natgw2.id
