@@ -5,12 +5,13 @@ resource "aws_instance" "data_node" {
   subnet_id              = var.subnet_id
   key_name               = var.key_name
   user_data              = var.user_data == "" ? file("${path.module}/init/data-nodes.sh") : var.user_data
-  ebs_optimized          = true
+//  ebs_optimized          = true
+  ebs_optimized          = false
   vpc_security_group_ids = var.security_group
   count                  = var.data_instances
 }
 
-
+/*
 resource "aws_ebs_volume" "data" {
   size              = var.data_disk_size
   encrypted         = true
@@ -27,7 +28,7 @@ resource "aws_volume_attachment" "data_attachment" {
   count        = var.data_instances
   force_detach = true
 }
-
+*/
 
 # Creates all meta nodes in the first / same subnet, this avoids splits if one AV goes offline.
 # Data nodes function fine without access to meta-nodes between shard creation.
@@ -42,7 +43,7 @@ resource "aws_volume_attachment" "data_attachment" {
  }
 
 
- resource "aws_ebs_volume" "meta" {
+/* resource "aws_ebs_volume" "meta" {
      size              = "100"
      encrypted         = true
      type              = "io1"
@@ -59,6 +60,7 @@ resource "aws_volume_attachment" "data_attachment" {
      count       = var.meta_instances
      force_detach = true
  }
+*/
 
 # Setup inter-node cluster communications.
  resource "aws_security_group" "influxdb_cluster" {
