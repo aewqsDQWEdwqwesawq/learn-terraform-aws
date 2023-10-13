@@ -1,12 +1,11 @@
 #!/bin/bash
-sudo -s 
 #apt install openjdk-11-jdk
 #echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" | tee ~/.bashrc
 #echo "export PATH=$PATH:$JAVA_HOME/bin" | tee ~/.bashrc
 #source ~/.bashrc
-apt-get update
-apt-get install nginx
-systemctl restart nginx
+sudo apt-get update
+sudo apt-get install nginx
+sudo systemctl restart nginx
 
 #influxDB
 wget -q https://repos.influxdata.com/influxdata-archive_compat.key

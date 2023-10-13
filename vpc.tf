@@ -27,7 +27,11 @@ resource "aws_subnet" "public_subnets" {
   vpc_id = aws_vpc.main_vpc.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "ap-northeast-2a"
-  map_public_ip_on_launch = true
+  depends_on = [aws_internet_gateway.testig]
+
+  tags = {
+    "Name" = "PublicSubnet"
+  }
   
 }
 
@@ -36,7 +40,7 @@ resource "aws_internet_gateway" "testig" {
   vpc_id = aws_vpc.main_vpc.id
   
   tags = {
-    "Name" = "igfornatgw"
+    "Name" = "ig"
   }
 }
 
@@ -44,6 +48,12 @@ resource "aws_internet_gateway" "testig" {
 resource "aws_eip" "natip" {
   domain = "vpc"
   
+}
+
+# EIP for bastion
+resource "aws_eip" "lb" {
+  instance = aws_instance.Bastion.id
+  domain   = "vpc"
 }
 
 # NAT GW
