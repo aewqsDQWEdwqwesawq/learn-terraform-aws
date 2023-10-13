@@ -74,11 +74,6 @@ resource "aws_nat_gateway" "natgw2" {
 # route table
 resource "aws_route_table" "publicrt" {
   vpc_id = aws_vpc.main_vpc.id
-
-  route {
-    cidr_block = "10.0.1.0/24"
-    gateway_id = aws_internet_gateway.testig.id
-  }
   
 }
 resource "aws_route_table" "privatert" {
