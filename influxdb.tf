@@ -1,6 +1,5 @@
 module "influxdb" {
-    source  = "influxdata/influxdb/aws"
-    version = "1.0.6"
+    source  = "./terraform-aws-influxdb-master"
 
     data_instances    = 1
     data_disk_size    = 1
