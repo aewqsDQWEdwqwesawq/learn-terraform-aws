@@ -23,9 +23,9 @@ resource "aws_launch_configuration" "applc" {
 
 resource "aws_autoscaling_group" "testasg" {
   name                 = "testasg"
-  min_size             = 1
+  min_size             = 2
   max_size             = 2
-  desired_capacity     = 1
+  desired_capacity     = 2
   launch_configuration = aws_launch_configuration.applc.id
   vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
 
