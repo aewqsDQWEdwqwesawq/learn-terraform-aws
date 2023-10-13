@@ -9,6 +9,10 @@ resource "aws_instance" "data_node" {
   ebs_optimized          = false
   vpc_security_group_ids = var.security_group
   count                  = var.data_instances
+
+  tags = {
+    "Name" = "data_node"
+  }
 }
 
 /*
@@ -40,6 +44,12 @@ resource "aws_volume_attachment" "data_attachment" {
      user_data                   = var.user_data == "" ? file("${path.module}/init/meta-nodes.sh") : var.user_data
      vpc_security_group_ids      = var.security_group
      count                       = var.meta_instances
+     ebs_optimized               = false
+
+
+     tags = {
+       "Name" = "meta_node"
+     }
  }
 
 
