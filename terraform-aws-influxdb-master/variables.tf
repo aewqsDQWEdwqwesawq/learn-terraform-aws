@@ -9,7 +9,7 @@ variable "name" {
 }
 variable "ami" {
   description = "The AMI ID to deploy"
-  default = "ami-0f42acddbf04bd1b6"
+  default = "ami-0c9c942bd7bf113a2"
 }
 
 variable "data_instances" {
