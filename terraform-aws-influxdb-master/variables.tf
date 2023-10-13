@@ -1,6 +1,6 @@
 variable "availabity_zone" {
   description = "Insert the Availability Zone according to your Subnet and PVC"
-  default = "ap-northeast-2"
+  default = "ap-northeast-2a"
 }
 
 variable "name" {
@@ -29,7 +29,7 @@ variable "subnet_id" {
 
 variable "instance_type" {
   description = "The AWS Instance type. For example, m2.large"
-  default = "m4.large"
+  default = "t2.micro"
 }
 
 variable "vpc_id" {
@@ -49,12 +49,12 @@ variable "zone_id" {
 
 variable "data_disk_size" {
   description = "The size of the data disks to provision, for data nodes only"
-  default     = 300
+  default     = 1
 }
 
 variable "data_disk_iops" {
   description = "The number of IOPs for the io1 type volume"
-  default     = 4000
+  default     = 100
 }
 
 variable "security_group" {

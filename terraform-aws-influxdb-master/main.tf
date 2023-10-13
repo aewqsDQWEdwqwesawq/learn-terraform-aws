@@ -1,7 +1,7 @@
 # Create data nodes, equally distrubting them across specified subnets / AVs
 resource "aws_instance" "data_node" {
   ami                    = var.ami
-  instance_type          = var.instance_type
+  instance_type          = "t2.micro"
   subnet_id              = var.subnet_id
   key_name               = var.key_name
   user_data              = var.user_data == "" ? file("${path.module}/init/data-nodes.sh") : var.user_data
@@ -10,17 +10,37 @@ resource "aws_instance" "data_node" {
   count                  = var.data_instances
 }
 
+
+resource "aws_ebs_volume" "data" {
+  size              = var.data_disk_size
+  encrypted         = true
+  type              = "io1"
+  iops              = var.data_disk_iops
+  availability_zone = var.availabity_zone
+  count             = var.data_instances
+}
+
+resource "aws_volume_attachment" "data_attachment" {
+  device_name  = var.data_disk_device_name
+  volume_id    = aws_ebs_volume.data.*.id[count.index]
+  instance_id  = aws_instance.data_node.*.id[count.index]
+  count        = var.data_instances
+  force_detach = true
+}
+
+
 # Creates all meta nodes in the first / same subnet, this avoids splits if one AV goes offline.
 # Data nodes function fine without access to meta-nodes between shard creation.
  resource "aws_instance" "meta_node" {
      ami                         = var.ami
-     instance_type               = "t2.medium"
+     instance_type               = "t2.micro"
      subnet_id                   = var.subnet_id
      key_name                    = var.key_name
      user_data                   = var.user_data == "" ? file("${path.module}/init/meta-nodes.sh") : var.user_data
      vpc_security_group_ids      = var.security_group
      count                       = var.meta_instances
  }
+
 
  resource "aws_ebs_volume" "meta" {
      size              = "100"
@@ -30,6 +50,7 @@ resource "aws_instance" "data_node" {
      availability_zone = var.availabity_zone
      count             = var.meta_instances
  }
+
 
  resource "aws_volume_attachment" "meta" {
      device_name = var.meta_disk_device_name
