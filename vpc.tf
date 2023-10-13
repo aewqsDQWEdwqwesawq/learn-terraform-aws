@@ -35,6 +35,7 @@ resource "aws_subnet" "public_subnets" {
   vpc_id = aws_vpc.main_vpc.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "ap-northeast-2a"
+  map_public_ip_on_launch = true
 
   tags = {
     "Name" = "PublicSubnet"
@@ -74,31 +75,32 @@ resource "aws_nat_gateway" "natgw2" {
 # route table
 resource "aws_route_table" "publicrt" {
   vpc_id = aws_vpc.main_vpc.id
-  
 }
 
 resource "aws_route" "publicroute" {
   route_table_id = aws_route_table.publicrt.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.testig.id
-  
 }
+
 resource "aws_route_table" "privatert" {
   vpc_id = aws_vpc.main_vpc.id
+}
 
-  route {
-    cidr_block     = "10.0.2.0/24"
-    nat_gateway_id = aws_nat_gateway.natgw.id
-  }
+resource "aws_route" "privateroute" {
+  route_table_id = aws_route_table.privatert.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.natgw.id
 }
 
 resource "aws_route_table" "privatert2" {
   vpc_id = aws_vpc.main_vpc.id
+}
 
-  route {
-    cidr_block     = "10.0.3.0/24"
-    nat_gateway_id = aws_nat_gateway.natgw2.id
-  }
+resource "aws_route" "privateroute" {
+  route_table_id = aws_route_table.privatert2.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.natgw2.id
 }
 
 # route table association
