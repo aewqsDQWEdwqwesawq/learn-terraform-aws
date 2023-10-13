@@ -25,13 +25,6 @@ resource "aws_security_group" "app_server" {
   }
 
   egress {
-    from_port   = 8086
-    to_port     = 8086
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.2.0/23"]
-  }
-
-  egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"

@@ -24,8 +24,6 @@ resource "aws_subnet" "private_subnets2" {
   tags = {
     "Name" = "Private2"
   }
-
-  
 }
 
 # Public Subnet

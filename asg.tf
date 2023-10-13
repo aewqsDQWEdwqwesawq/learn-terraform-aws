@@ -15,10 +15,8 @@ resource "aws_launch_configuration" "applc" {
   instance_type   = "t2.micro"
   user_data       = file("user-data.sh")
   security_groups = [aws_security_group.app_server.id]
+  key_name = aws_key_pair.pka.key_name
 
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_autoscaling_group" "testasg" {
@@ -28,9 +26,9 @@ resource "aws_autoscaling_group" "testasg" {
   desired_capacity     = 2
   launch_configuration = aws_launch_configuration.applc.id
   vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
-
-  health_check_type    = "ELB"
-
+  health_check_type    = "EC2"
+  target_group_arns = [ aws_lb_target_group.testlb-target.arn ]
+  depends_on = [aws_lb_target_group.testlb-target]
   tag {
     key                 = "Name"
     value               = "App server"
