@@ -77,7 +77,7 @@ resource "aws_route_table" "publicrt" {
   vpc_id = aws_vpc.main_vpc.id
 
   route {
-    cidr_block = [aws_subnet.public_subnets]
+    cidr_block = ["aws_subnet.public_subnets"]
     gateway_id = aws_internet_gateway.testig.id
   }
   
@@ -86,7 +86,7 @@ resource "aws_route_table" "privatert" {
   vpc_id = aws_vpc.main_vpc.id
 
   route {
-    cidr_block     = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
+    cidr_block     = ["aws_subnet.private_subnets.id","aws_subnet.private_subnets2.id"]
     nat_gateway_id = aws_nat_gateway.natgw.id
   }
 }
