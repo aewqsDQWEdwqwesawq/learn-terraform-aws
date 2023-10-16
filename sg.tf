@@ -6,7 +6,7 @@ resource "aws_security_group" "app_server" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [aws_instance.Bastion.cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 
