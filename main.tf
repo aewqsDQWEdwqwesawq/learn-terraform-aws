@@ -30,7 +30,7 @@ resource "aws_instance" "Bastion" {
   instance_type = "t2.micro"
   security_groups = [aws_security_group.public_sub.id]
   subnet_id = aws_subnet.public_subnets.id
- // key_name = aws_key_pair.pka.key_name
+#  key_name = aws_key_pair.pka.key_name
   
   tags = {
     "Name" = "BastionHost"
