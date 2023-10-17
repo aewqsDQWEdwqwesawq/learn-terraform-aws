@@ -63,7 +63,7 @@ resource "aws_nat_gateway" "natgw" {
 
 resource "aws_nat_gateway" "natgw2" {
   allocation_id = aws_eip.natip2.id
-  subnet_id = aws_subnet.public_subnets2.id
+  subnet_id = aws_subnet.public_subnets.id
 }
 
 # route table
