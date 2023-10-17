@@ -25,7 +25,7 @@ resource "aws_autoscaling_group" "testasg" {
   desired_capacity     = 2
   launch_configuration = aws_launch_configuration.applc.id
   vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
-  health_check_type    = "EC2"
+  health_check_type    = "ELB"
   target_group_arns = [ aws_lb_target_group.testlb-target.arn ]
   depends_on = [aws_lb_target_group.testlb-target]
   tag {
