@@ -33,6 +33,11 @@ resource "aws_autoscaling_group" "testasg" {
     value               = "App server"
     propagate_at_launch = true
   }
+
+  lifecycle {
+    ignore_changes = [load_balancers, target_group_arns]
+  }
+}
 }
 
 resource "aws_autoscaling_attachment" "test" {
