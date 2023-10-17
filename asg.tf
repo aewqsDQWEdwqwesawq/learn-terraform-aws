@@ -13,7 +13,7 @@ resource "aws_launch_configuration" "applc" {
   name_prefix      = "terraform-aws-asg-"
   image_id         = data.aws_ami.ubuntu.id
   instance_type    = "t2.micro"
-  user_data        = file("${path.module}/user-data.sh")
+  user_data        = file("./user-data.sh")
   security_groups  = [aws_security_group.app_server.id]
   key_name = aws_key_pair.pka.key_name
 }
