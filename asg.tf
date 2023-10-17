@@ -33,13 +33,5 @@ resource "aws_autoscaling_group" "testasg" {
     propagate_at_launch = true
   }
 
-#  lifecycle {
-#    ignore_changes = [load_balancers, target_group_arns]
-#  }
-}
 
-
-resource "aws_autoscaling_attachment" "test" {
-  autoscaling_group_name = aws_autoscaling_group.testasg.id
-  lb_target_group_arn   = aws_lb_target_group.testlb-target.id
 }
