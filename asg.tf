@@ -34,9 +34,9 @@ resource "aws_autoscaling_group" "testasg" {
     propagate_at_launch = true
   }
 
-  lifecycle {
-    ignore_changes = [load_balancers, target_group_arns]
-  }
+#  lifecycle {
+#    ignore_changes = [load_balancers, target_group_arns]
+#  }
 }
 
 
