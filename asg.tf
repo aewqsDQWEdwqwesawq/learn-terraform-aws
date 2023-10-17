@@ -38,7 +38,7 @@ resource "aws_autoscaling_group" "testasg" {
     ignore_changes = [load_balancers, target_group_arns]
   }
 }
-}
+
 
 resource "aws_autoscaling_attachment" "test" {
   autoscaling_group_name = aws_autoscaling_group.testasg.id
