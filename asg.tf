@@ -15,7 +15,7 @@ resource "aws_launch_configuration" "applc" {
   instance_type    = "t2.micro"
   user_data        = file("${path.module}/user-data.sh")
   security_groups  = [aws_security_group.app_server.id]
-#  key_name = aws_key_pair.pka.key_name
+  key_name = aws_key_pair.pka.key_name
 }
 
 resource "aws_autoscaling_group" "testasg" {
