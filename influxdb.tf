@@ -9,5 +9,5 @@ module "influxdb" {
     subnet_id         = aws_subnet.private_subnets.id
     vpc_id            = aws_vpc.main_vpc.id
     instance_type     = "t2.micro"
-    security_group    = [aws_security_group.data.node.id]
+    security_group    = [aws_security_group.data_node.id]
 }    
