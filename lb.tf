@@ -2,6 +2,7 @@
 resource "aws_lb" "testlb" {
   name               = "test-lb"
   load_balancer_type = "application"
+  internal           = false
   security_groups    = [aws_security_group.test_lb.id]
   subnets            = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
   depends_on         = [ aws_autoscaling_group.testasg ]
