@@ -1,11 +1,10 @@
 
 resource "aws_lb" "testlb" {
   name               = "test-lb"
-  internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.test_lb.id]
   subnets            = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
-  depends_on = [ aws_autoscaling_group.testasg ]
+  depends_on         = [ aws_autoscaling_group.testasg ]
 }
 
 resource "aws_lb_listener" "testlb-listener" {
