@@ -84,7 +84,7 @@ resource "aws_security_group" "public_sub" {
 
 # for grafana
 
-resource "aws_security_group" "grafana_sub" {
+resource "aws_security_group" "grafana" {
   name  = "SGforgrafana"
   vpc_id = aws_vpc.main_vpc.id
 
