@@ -9,7 +9,6 @@ resource "aws_instance" "data_node" {
   ebs_optimized          = false
   vpc_security_group_ids = var.security_group
   count                  = var.data_instances
-  key_name               = aws_key_pair.mainkey.key_name
 
   tags = {
     "Name" = "data_node"
@@ -46,7 +45,6 @@ resource "aws_volume_attachment" "data_attachment" {
      vpc_security_group_ids      = var.security_group
      count                       = var.meta_instances
      ebs_optimized               = false
-     key_name                    = aws_key_pair.mainkey.key_name
 
 
      tags = {
