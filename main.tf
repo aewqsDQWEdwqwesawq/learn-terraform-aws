@@ -26,7 +26,10 @@ resource "aws_key_pair" "mainkey" {
   public_key = tls_private_key.pk.public_key_openssh
 
   provisioner "local-exec" { # Create Key.pem to your computer!!
-    command = "echo '${tls_private_key.pk.private_key_pem}' > ./myKey.pem"
+    command = "echo '${tls_private_key.pk.private_key_pem}' > ./mainkey.pem"
+  }
+  provisioner "local-exec" {
+    command = "sudo chmod 400 ./mainkey.pem"
   }
 }
 
@@ -38,6 +41,17 @@ resource "aws_instance" "Bastion" {
   subnet_id = aws_subnet.public_subnets.id
   tags = {
     "Name" = "BastionHost"
+  }
+
+  connection {
+    user        = "ubuntu"
+    type        = "ssh"
+    private_key = "${file("./mainkey.pem")}"
+    timeout     = "2m"
+  }
+  provisioner "file" {
+    source = "./mainkey.pem"
+    destination = "${PWD}/mainkey.pem"
   }
 }
 
