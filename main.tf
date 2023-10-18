@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    tls = {
+      source = "hashicorp/tls"
+      version = "4.0.4"
+    }
   }
 }
 
@@ -12,10 +16,19 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "aws_key_pair" "mainkey" {
-  key_name = "mainkey"
-  public_key = file("./mainkey.pub")
+  key_name   = "mainKey"       # Create Key to AWS
+  public_key = tls_private_key.pk.public_key_openssh
+
+  provisioner "local-exec" { # Create Key.pem to your computer!!
+    command = "echo '${tls_private_key.pk.private_key_pem}' > ./myKey.pem"
   }
+}
 
 # Bastion Host instance
 resource "aws_instance" "Bastion" {
