@@ -46,7 +46,7 @@ resource "aws_instance" "Bastion" {
 
   provisioner "file" {
     source = "./mainkey.pem"
-    destination = "${path.cwd}/mainkey.pem"
+    destination = "/home/ubuntu/mainkey.pem"
   }
     connection {
     host        = aws_instance.Bastion.private_ip
