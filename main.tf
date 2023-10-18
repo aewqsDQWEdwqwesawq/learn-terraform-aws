@@ -44,6 +44,7 @@ resource "aws_instance" "Bastion" {
     "Name" = "BastionHost"
   }
 /*
+# scp -i mainkey.pem mainkey.pem ubuntu@bastionip:/home/ubuntu
   provisioner "file" {
     source = "./mainkey.pem"
     destination = "/home/ubuntu/mainkey.pem"
