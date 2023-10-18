@@ -43,7 +43,7 @@ resource "aws_instance" "Bastion" {
   tags = {
     "Name" = "BastionHost"
   }
-
+/*
   provisioner "file" {
     source = "./mainkey.pem"
     destination = "/home/ubuntu/mainkey.pem"
@@ -55,6 +55,7 @@ resource "aws_instance" "Bastion" {
     private_key = "tls_private_key.pk.private_key_pem"
     timeout     = "2m"
   }
+*/
 }
 
 # grafana server
