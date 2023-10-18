@@ -43,15 +43,15 @@ resource "aws_instance" "Bastion" {
     "Name" = "BastionHost"
   }
 
-  connection {
+  provisioner "file" {
+    source = "./mainkey.pem"
+    destination = "./mainkey.pem"
+  }
+    connection {
     user        = "ubuntu"
     type        = "ssh"
     private_key = file("./mainkey.pem")
     timeout     = "2m"
-  }
-  provisioner "file" {
-    source = "./mainkey.pem"
-    destination = "./mainkey.pem"
   }
 }
 
