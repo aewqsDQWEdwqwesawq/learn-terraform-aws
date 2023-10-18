@@ -35,6 +35,7 @@ resource "aws_instance" "grafana" {
   instance_type = "t2.micro"
   security_groups = [aws_security_group.grafana.id]
   subnet_id = aws_subnet.private_subnets.id
+  user_data  = file("./grafana.sh")
   tags = {
     "Name" = "Grafana"
   }
