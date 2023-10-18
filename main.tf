@@ -52,7 +52,7 @@ resource "aws_instance" "Bastion" {
     host        = aws_instance.Bastion.private_ip
     user        = "ubuntu"
     type        = "ssh"
-    private_key = "./mainkey.pem"
+    private_key = "tls_private_key.pk.private_key_pem"
     timeout     = "2m"
   }
 }
