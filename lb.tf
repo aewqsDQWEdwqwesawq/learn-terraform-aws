@@ -30,8 +30,8 @@ resource "aws_lb_target_group" "testlb-target" {
     protocol = "HTTP"
     healthy_threshold = 2
     unhealthy_threshold = 2
-    interval = 30
-    timeout = 5
+    interval = 60
+    timeout = 30
   }
 }
 
