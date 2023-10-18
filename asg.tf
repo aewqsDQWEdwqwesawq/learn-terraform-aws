@@ -33,6 +33,28 @@ resource "aws_autoscaling_group" "testasg" {
     value               = "App server"
     propagate_at_launch = true
   }
+}
 
+resource "aws_launch_configuration" "dblc" {
+  name_prefix      = "asg-db"
+  image_id         = data.aws_ami.ubuntu.id
+  instance_type    = "t2.micro"
+  user_data        = file("./data-nodes.sh")
+  security_groups  = [aws_security_group.app_server.id]
+  key_name         = aws_key_pair.mainkey.key_name
+}
 
+resource "aws_autoscaling_group" "dbasg" {
+  name                 = "dbasg"
+  min_size             = 2
+  max_size             = 2
+  desired_capacity     = 2
+  launch_configuration = aws_launch_configuration.dblc.id
+  vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
+  health_check_type    = "EC2"
+  tag {
+    key                 = "Name"
+    value               = "InfluxDB"
+    propagate_at_launch = true
+  }
 }
