@@ -17,3 +17,4 @@ sudo bash -c "cat << EOF >> /etc/telegraf/telegraf.conf
   username = \"telegraf\"
   password = \"password\"
 EOF"
+sudo systemctl restart telegraf
