@@ -10,10 +10,10 @@ echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdat
 echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 
 sudo apt update && sudo apt install -y telegraf
-sudo cat << EOF > /etc/telegraf/telegraf.conf
+sudo bash -c "cat << EOF >> /etc/telegraf/telegraf.conf
 [[outputs.influxdb]]
-  urls = ["http://${lbip}:8086"]
-  database = "telegraf"
-  username = "telegraf"
-  password = "password"
-EOF
+  urls = [\"http://${lbip}:8086\"]
+  database = \"telegraf\"
+  username = \"telegraf\"
+  password = \"password\"
+EOF"
