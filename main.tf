@@ -39,18 +39,20 @@ resource "aws_instance" "Bastion" {
   instance_type = "t2.micro"
   security_groups = [aws_security_group.public_sub.id]
   subnet_id = aws_subnet.public_subnets.id
+  key_name   = aws_key_pair.mainkey.key_name
   tags = {
     "Name" = "BastionHost"
   }
 
   provisioner "file" {
     source = "./mainkey.pem"
-    destination = "./mainkey.pem"
+    destination = "${path.cwd}/mainkey.pem"
   }
     connection {
+    host        = aws_instance.Bastion.private_ip
     user        = "ubuntu"
     type        = "ssh"
-    private_key = file("./mainkey.pem")
+    private_key = file("${path.cwd}/mainkey.pem")
     timeout     = "2m"
   }
 }
