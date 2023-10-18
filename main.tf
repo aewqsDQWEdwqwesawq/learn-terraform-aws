@@ -43,20 +43,7 @@ resource "aws_instance" "Bastion" {
   tags = {
     "Name" = "BastionHost"
   }
-/*
 # scp -i mainkey.pem mainkey.pem ubuntu@bastionip:/home/ubuntu
-  provisioner "file" {
-    source = "./mainkey.pem"
-    destination = "/home/ubuntu/mainkey.pem"
-  }
-    connection {
-    host        = aws_instance.Bastion.private_ip
-    user        = "ubuntu"
-    type        = "ssh"
-    private_key = "tls_private_key.pk.private_key_pem"
-    timeout     = "2m"
-  }
-*/
 }
 
 # grafana server
