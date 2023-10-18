@@ -33,7 +33,7 @@ resource "aws_instance" "Bastion" {
 resource "aws_instance" "grafana" {
   ami = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  security_groups = [aws_security_group.app_server.id]
+  security_groups = [aws_security_group.grafana.id]
   subnet_id = aws_subnet.private_subnets.id
   tags = {
     "Name" = "Grafana"
