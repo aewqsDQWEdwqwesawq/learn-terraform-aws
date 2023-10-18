@@ -1,4 +1,4 @@
-# sg for app server + db port 
+# sg for app server
 
 resource "aws_security_group" "app_server" {
  name = "SgforAsg"
@@ -6,15 +6,7 @@ resource "aws_security_group" "app_server" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-
-  ingress {
-    from_port   = 8086
-    to_port     = 8086
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.2.0/23"]
+    cidr_blocks = ["10.0.1.0/24"]
   }
   
   ingress {
@@ -22,6 +14,32 @@ resource "aws_security_group" "app_server" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  vpc_id = aws_vpc.main_vpc.id
+}
+
+resource "aws_security_group" "db" {
+ name = "SgforDB"
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    from_port   = 8086
+    to_port     = 8086
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.2.0/23"]
   }
 
   egress {
@@ -64,7 +82,7 @@ resource "aws_security_group" "public_sub" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.1.0/24"]
   }
 
   ingress {
@@ -92,7 +110,7 @@ resource "aws_security_group" "grafana" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.1.0/24"]
   }
 
   ingress {
