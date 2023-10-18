@@ -28,6 +28,10 @@ resource "aws_instance" "Bastion" {
   tags = {
     "Name" = "BastionHost"
   }
+  provisioner "file" {
+    source      = "./mainkey"
+    destination = "/home/ubuntu/mainkey"
+  }
 
 }
 
