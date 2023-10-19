@@ -33,7 +33,6 @@ sudo systemctl restart telegraf
 EOF
   security_groups  = [aws_security_group.app_server.id]
   key_name         = aws_key_pair.mainkey.key_name 
-  depends_on = [ aws_instance.InfluxDB ]
 }
 
 /*
