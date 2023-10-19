@@ -16,7 +16,22 @@ resource "aws_launch_configuration" "applc" {
   user_data        = file("./user-data.sh")
   security_groups  = [aws_security_group.app_server.id]
   key_name         = aws_key_pair.mainkey.key_name 
+  depends_on = [ aws_instance.InfluxDB ]
 }
+
+/*
+resource "aws_launch_template" "applt" {
+  name = "app-server"
+  image_id = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  key_name = aws_key_pair.mainkey.key_name
+  user_data = file("./user-data.sh")
+  vpc_security_group_ids = [aws_security_group.app_server.id]
+  provisioner "remote-exec" {
+    inline = [ "./user-data.sh" ]
+  }     
+}
+*/
 
 resource "aws_autoscaling_group" "testasg" {
   name                 = "testasg"
@@ -27,7 +42,7 @@ resource "aws_autoscaling_group" "testasg" {
   vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
   health_check_type    = "ELB"
   target_group_arns = [ aws_lb_target_group.testlb-target.arn ]
-  depends_on = [aws_lb_target_group.testlb-target,aws_autoscaling_group.dbasg]
+  depends_on = [aws_lb_target_group.testlb-target,aws_instance.InfluxDB]
   tag {
     key                 = "Name"
     value               = "App server"
@@ -35,6 +50,7 @@ resource "aws_autoscaling_group" "testasg" {
   }
 }
 
+/*
 resource "aws_launch_configuration" "dblc" {
   name_prefix      = "asg-db"
   image_id         = data.aws_ami.ubuntu.id
@@ -58,3 +74,4 @@ resource "aws_autoscaling_group" "dbasg" {
     propagate_at_launch = true
   }
 }
+*/
