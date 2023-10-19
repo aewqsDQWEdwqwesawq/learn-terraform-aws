@@ -11,10 +11,15 @@ echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https
 
 sudo apt update && sudo apt install -y telegraf
 sudo bash -c "cat << EOF >> /etc/telegraf/telegraf.conf
-[[outputs.influxdb]]
-  urls = [\"http://${aws_instance.InfluxDB.private_ip}:8086\"]
+
+EOF"
+sudo systemctl restart telegraf
+
+
+cat << EOF | sudo tee -a /etc/telegraf/telegraf.conf
+\[\[outputs.influxdb\]\]
+  urls = [\"http://$"${aws_instance.InfluxDB.private_ip}":8086\"]
   database = \"telegraf\"
   username = \"telegraf\"
   password = \"password\"
-EOF"
-sudo systemctl restart telegraf
+EOF

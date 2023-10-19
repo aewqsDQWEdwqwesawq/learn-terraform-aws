@@ -75,4 +75,5 @@ resource "aws_instance" "InfluxDB" {
   tags = {
     "Name" = "InfluxDB"
   }
+  
 }
