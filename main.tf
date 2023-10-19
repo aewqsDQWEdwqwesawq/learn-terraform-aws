@@ -46,6 +46,10 @@ resource "aws_instance" "Bastion" {
 # scp -i mainkey.pem mainkey.pem ubuntu@bastionip:/home/ubuntu
 }
 
+output "BastionHost" {
+  value = aws_instance.Bastion.public_ip
+}
+
 # grafana server
 
 resource "aws_instance" "grafana" {
