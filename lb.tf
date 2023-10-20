@@ -48,7 +48,7 @@ resource "aws_lb_listener" "grafana" {
 resource "aws_lb_target_group" "grafana" {
   name = "grafana-tg"
   port = 3000
-  protocol = "TCP"
+  protocol = "HTTP"
   target_type = "instance"
   vpc_id = aws_vpc.main_vpc.id
 }
