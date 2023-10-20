@@ -35,3 +35,27 @@ resource "aws_lb_target_group" "testlb-target" {
   }
 }
 
+resource "aws_lb_listener" "grafana" {
+  load_balancer_arn = aws_lb.testlb.arn
+  port = 3000
+  protocol = "HTTP"
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.grafana.arn
+  }
+}
+
+resource "aws_lb_target_group" "grafana" {
+  name = "grafana-tg"
+  port = 3000
+  protocol = "TCP"
+  target_type = "instance"
+  vpc_id = aws_vpc.main_vpc.id
+}
+
+resource "aws_lb_target_group_attachment" "grafana" {
+  target_group_arn = aws_lb_target_group.grafana.arn
+  target_id = aws_instance.grafana.id
+  port = 3000
+  
+}

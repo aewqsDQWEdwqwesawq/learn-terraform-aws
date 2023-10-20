@@ -62,6 +62,7 @@ resource "aws_instance" "grafana" {
   tags = {
     "Name" = "Grafana"
   }
+  
 }
 
 # DB server
