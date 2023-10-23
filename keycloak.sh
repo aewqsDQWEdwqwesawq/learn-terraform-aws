@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt update
-sudo apt install openjdk-11-jdk
+sudo apt install openjdk-11-jdk -y
 wget https://github.com/keycloak/keycloak/releases/download/21.1.2/keycloak-21.1.2.tar.gz
 tar -zxvf keycloak-21.1.2.tar.gz
 cd keycloak-21.1.2/
