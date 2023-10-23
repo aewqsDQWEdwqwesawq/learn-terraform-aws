@@ -58,6 +58,7 @@ resource "aws_instance" "grafana" {
   security_groups = [aws_security_group.grafana.id]
   subnet_id       = aws_subnet.private_subnets.id
   user_data       = <<EOF
+  #!/bin/bash
   sudo apt-get install -y apt-transport-https software-properties-common wget
 sudo mkdir -p /etc/apt/keyrings/
 wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
@@ -96,6 +97,7 @@ resource "aws_instance" "keyCloak" {
   security_groups = [aws_security_group.app_server.id]
   subnet_id       = aws_subnet.private_subnets.id
   user_data       = <<EOF
+  #!/bin/bash
 sudo apt update
 sudo apt install openjdk-11-jdk -y
 wget https://github.com/keycloak/keycloak/releases/download/21.1.2/keycloak-21.1.2.tar.gz
