@@ -80,7 +80,7 @@ resource "aws_lb_target_group" "keycloak" {
 
 resource "aws_lb_target_group_attachment" "keycloak" {
   target_group_arn = aws_lb_target_group.keycloak.arn
-  target_id = aws_instance.grafana.id
+  target_id = aws_instance.keyCloak.id
   port = 8080
   
 }
