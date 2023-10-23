@@ -57,19 +57,7 @@ resource "aws_instance" "grafana" {
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.grafana.id]
   subnet_id       = aws_subnet.private_subnets.id
-  user_data       = <<EOF
-  #!/bin/bash
-  sudo apt-get install -y apt-transport-https software-properties-common wget
-sudo mkdir -p /etc/apt/keyrings/
-wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com beta main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-sudo apt-get update
-sudo apt-get install grafana -y
-sudo /bin/systemctl daemon-reload
-sudo /bin/systemctl enable grafana-server
-sudo systemctl start grafana-server
-EOF
+  user_data       = file("./grafana.sh")
   key_name        = aws_key_pair.mainkey.key_name
   tags = {
     "Name" = "Grafana"
@@ -96,17 +84,7 @@ resource "aws_instance" "keyCloak" {
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.app_server.id]
   subnet_id       = aws_subnet.private_subnets.id
-  user_data       = <<EOF
-  #!/bin/bash
-sudo apt update
-sudo apt install openjdk-11-jdk -y
-wget https://github.com/keycloak/keycloak/releases/download/21.1.2/keycloak-21.1.2.tar.gz
-tar -zxvf keycloak-21.1.2.tar.gz
-cd keycloak-21.1.2/
-export KEYCLOAK_ADMIN=admin
-export KEYCLOAK_ADMIN_PASSWORD=password
-sudo -E $PWD/keycloak-17.0.0/bin/kc.sh start-dev
-EOF
+  user_data       = file("./keycloak.sh")
   key_name        = aws_key_pair.mainkey.key_name
   tags = {
     "Name" = "keyCloak"
