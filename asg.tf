@@ -51,7 +51,7 @@ resource "aws_autoscaling_group" "testasg" {
   vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
   health_check_type    = "ELB"
   target_group_arns = [ aws_lb_target_group.testlb-target.arn ]
-  depends_on = [aws_lb_target_group.testlb-target,aws_instance.InfluxDB]
+  depends_on = [aws_lb_target_group.testlb-target,aws_instance.InfluxDB,aws_instance.InfluxDB2]
   tag {
     key                 = "Name"
     value               = "App server"
