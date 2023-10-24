@@ -65,7 +65,7 @@ resource "aws_instance" "grafana" {
 }
 
 # DB server
-resource "aws_instance" "InfluxDB" {
+resource "aws_instance" "InfluxDB1" {
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.db.id]
