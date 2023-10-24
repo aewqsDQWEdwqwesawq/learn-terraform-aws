@@ -10,7 +10,7 @@ echo '393e8779c89ac8d958f81f942f9ad7fb82a25e133faddaf92e15b16e6ac9ce4c influxdat
 echo 'deb [signed-by=/etc/apt/trusted.gpg.d/influxdata-archive_compat.gpg] https://repos.influxdata.com/debian stable main' | sudo tee /etc/apt/sources.list.d/influxdata.list
 
 sudo apt update && sudo apt install -y telegraf
-export dbip=${aws_instance.BastionHost.private_ip}
+export dbip=${aws_instance.InfluxDB.private_ip}
 
 cat << EOF | sudo tee -a /etc/telegraf/telegraf.conf
 [[outputs.influxdb]]
