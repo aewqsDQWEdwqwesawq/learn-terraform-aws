@@ -1,4 +1,4 @@
-
+# loadbalancer
 resource "aws_lb" "testlb" {
   name               = "test-lb"
   load_balancer_type = "application"
@@ -8,6 +8,7 @@ resource "aws_lb" "testlb" {
   depends_on         = [ aws_autoscaling_group.testasg ]
 }
 
+# listener for app server
 resource "aws_lb_listener" "testlb-listener" {
   load_balancer_arn = aws_lb.testlb.arn
   port              = 80
@@ -18,6 +19,7 @@ resource "aws_lb_listener" "testlb-listener" {
   }
 }
 
+# target group for app server
 resource "aws_lb_target_group" "testlb-target" {
   name     = "test-lb-tg"
   port     = 80
@@ -35,6 +37,8 @@ resource "aws_lb_target_group" "testlb-target" {
   }
 }
 
+
+# listener for grafana server
 resource "aws_lb_listener" "grafana" {
   load_balancer_arn = aws_lb.testlb.arn
   port = 3000
@@ -45,6 +49,7 @@ resource "aws_lb_listener" "grafana" {
   }
 }
 
+# target group for grafana
 resource "aws_lb_target_group" "grafana" {
   name = "grafana-tg"
   port = 3000
@@ -53,6 +58,7 @@ resource "aws_lb_target_group" "grafana" {
   vpc_id = aws_vpc.main_vpc.id
 }
 
+# grafana target group associate
 resource "aws_lb_target_group_attachment" "grafana" {
   target_group_arn = aws_lb_target_group.grafana.arn
   target_id = aws_instance.grafana.id
@@ -60,6 +66,7 @@ resource "aws_lb_target_group_attachment" "grafana" {
   
 }
 
+# listener for keycloak
 resource "aws_lb_listener" "keycloak" {
   load_balancer_arn = aws_lb.testlb.arn
   port = 8080
@@ -70,6 +77,7 @@ resource "aws_lb_listener" "keycloak" {
   }
 }
 
+# target group for keycloak
 resource "aws_lb_target_group" "keycloak" {
   name = "keycloak-tg"
   port = 8080
@@ -78,6 +86,7 @@ resource "aws_lb_target_group" "keycloak" {
   vpc_id = aws_vpc.main_vpc.id
 }
 
+# keycloak target group associate
 resource "aws_lb_target_group_attachment" "keycloak" {
   target_group_arn = aws_lb_target_group.keycloak.arn
   target_id = aws_instance.keyCloak.id

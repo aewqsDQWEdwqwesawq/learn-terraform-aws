@@ -1,4 +1,4 @@
-
+# latest ubuntu ami
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["amazon"]
@@ -9,6 +9,7 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+# app server launch configuration + userdata
 resource "aws_launch_configuration" "applc" {
   name_prefix      = "terraform-aws-asg-"
   image_id         = data.aws_ami.ubuntu.id
@@ -35,20 +36,7 @@ EOF
   key_name         = aws_key_pair.mainkey.key_name 
 }
 
-/*
-resource "aws_launch_template" "applt" {
-  name = "app-server"
-  image_id = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name = aws_key_pair.mainkey.key_name
-  user_data = file("./user-data.sh")
-  vpc_security_group_ids = [aws_security_group.app_server.id]
-  provisioner "remote-exec" {
-    inline = [ "./user-data.sh" ]
-  }     
-}
-*/
-
+# asg for app server
 resource "aws_autoscaling_group" "testasg" {
   name                 = "testasg"
   min_size             = 2

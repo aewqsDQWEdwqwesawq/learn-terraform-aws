@@ -16,6 +16,7 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+# key
 resource "tls_private_key" "pk" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -43,7 +44,6 @@ resource "aws_instance" "Bastion" {
   tags = {
     "Name" = "BastionHost"
   }
-# scp -i mainkey.pem mainkey.pem ubuntu@bastionip:/home/ubuntu
 }
 
 output "BastionHost" {
@@ -51,7 +51,6 @@ output "BastionHost" {
 }
 
 # grafana server
-
 resource "aws_instance" "grafana" {
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
@@ -79,6 +78,7 @@ resource "aws_instance" "InfluxDB" {
   
 }
 
+# keycloak server
 resource "aws_instance" "keyCloak" {
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"

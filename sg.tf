@@ -33,6 +33,7 @@ resource "aws_security_group" "app_server" {
   vpc_id = aws_vpc.main_vpc.id
 }
 
+# sg for influxDB
 resource "aws_security_group" "db" {
  name = "SgforDB"
   ingress {
@@ -121,8 +122,7 @@ resource "aws_security_group" "public_sub" {
   }
 }
 
-# for grafana
-
+# sg for grafana
 resource "aws_security_group" "grafana" {
   name  = "SGforgrafana"
   vpc_id = aws_vpc.main_vpc.id
