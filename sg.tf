@@ -6,7 +6,7 @@ resource "aws_security_group" "app_server" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [aws_instance.Bastion.private_ip]
+    cidr_blocks = ["${aws_instance.Bastion.private_ip}/32"]
   }
   
   ingress {
@@ -40,7 +40,7 @@ resource "aws_security_group" "db" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [aws_instance.Bastion.private_ip]
+    cidr_blocks = ["${aws_instance.Bastion.private_ip}/32"]
   }
   
   ingress {
@@ -131,7 +131,7 @@ resource "aws_security_group" "grafana" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = [aws_instance.Bastion.private_ip]
+    cidr_blocks = ["${aws_instance.Bastion.private_ip}/32"]
   }
 
   ingress {
