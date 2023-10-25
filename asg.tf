@@ -27,12 +27,12 @@ sudo systemctl enable telegraf
 cat << EOT | sudo tee -a /etc/telegraf/telegraf.conf
 [[outputs.influxdb]]
   urls = ["http://${aws_instance.InfluxDB1.private_ip}:8086"]
-  database = "telegraf"
+  database = "telegraf1"
   username = "telegraf"
   password = "password"
 [[outputs.influxdb]]
   urls = ["http://${aws_instance.InfluxDB2.private_ip}:8086"]
-  database = "telegraf"
+  database = "telegraf2"
   username = "telegraf"
   password = "password"
 EOT
