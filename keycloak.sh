@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo 'Port 22' >> /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
 ver=21.1.2
 
 sudo apt update
