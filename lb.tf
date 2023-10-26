@@ -5,7 +5,7 @@ resource "aws_lb" "testlb" {
   internal           = false
   security_groups    = [aws_security_group.test_lb.id]
   subnets            = [aws_subnet.public_subnets.id,aws_subnet.private_subnets2.id]
-  depends_on         = [ aws_autoscaling_group.testasg ]
+  depends_on         = [ aws_autoscaling_group.appasg ]
 }
 
 # listener for app server
@@ -15,12 +15,12 @@ resource "aws_lb_listener" "testlb-listener" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.testlb-target.arn
+    target_group_arn = aws_lb_target_group.app.arn
   }
 }
 
 # target group for app server
-resource "aws_lb_target_group" "testlb-target" {
+resource "aws_lb_target_group" "app" {
   name     = "test-lb-tg"
   port     = 80
   protocol = "HTTP"
@@ -89,7 +89,7 @@ resource "aws_lb_target_group" "keycloak" {
 # keycloak target group associate
 resource "aws_lb_target_group_attachment" "keycloak" {
   target_group_arn = aws_lb_target_group.keycloak.arn
-  target_id = aws_instance.keyCloak.id
+  target_id = aws_instance.keycloak.id
   port = 8080
   
 }

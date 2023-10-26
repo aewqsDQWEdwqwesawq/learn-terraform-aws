@@ -42,16 +42,16 @@ EOF
 }
 
 # asg for app server
-resource "aws_autoscaling_group" "testasg" {
-  name                 = "testasg"
+resource "aws_autoscaling_group" "appasg" {
+  name                 = "appasg"
   min_size             = 2
   max_size             = 2
   desired_capacity     = 2
   launch_configuration = aws_launch_configuration.applc.id
   vpc_zone_identifier  = [aws_subnet.private_subnets.id,aws_subnet.private_subnets2.id]
   health_check_type    = "ELB"
-  target_group_arns = [ aws_lb_target_group.testlb-target.arn ]
-  depends_on = [aws_lb_target_group.testlb-target,aws_instance.InfluxDB1,aws_instance.InfluxDB2]
+  target_group_arns = [ aws_lb_target_group.app.arn ]
+  depends_on = [aws_lb_target_group.app,aws_instance.InfluxDB1,aws_instance.InfluxDB2]
   tag {
     key                 = "Name"
     value               = "App server"
