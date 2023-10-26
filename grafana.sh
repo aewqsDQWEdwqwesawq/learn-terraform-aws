@@ -10,5 +10,5 @@ sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable grafana-server
 sudo systemctl start grafana-server
 
-sudo echo 'Port 22' >> /etc/ssh/sshd_config
+sudo echo 'Port 2022' >> /etc/ssh/sshd_config
 sudo systemctl restart sshd
