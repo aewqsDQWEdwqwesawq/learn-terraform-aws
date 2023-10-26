@@ -24,7 +24,6 @@ resource "aws_instance" "InfluxDB2" {
 }
 
 resource "aws_instance" "InfluxDB" {
-  for_each = 2
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.db.id]
