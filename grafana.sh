@@ -9,6 +9,3 @@ sudo apt-get install grafana -y
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable grafana-server
 sudo systemctl start grafana-server
-
-sudo echo 'Port 2022' >> /etc/ssh/sshd_config
-sudo systemctl restart sshd

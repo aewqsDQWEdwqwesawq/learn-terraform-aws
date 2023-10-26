@@ -11,6 +11,3 @@ sudo apt install influxdb-client -y
 sudo systemctl restart influxdb-client
 sudo systemctl enable influxdb
 sudo systmectl enable influxdb-client
-
-sudo echo 'Port 2022' >> /etc/ssh/sshd_config
-sudo systemctl restart sshd
