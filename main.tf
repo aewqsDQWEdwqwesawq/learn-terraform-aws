@@ -52,10 +52,10 @@ resource "aws_instance" "Bastion" {
   subnet_id = aws_subnet.public_subnets.id
   key_name   = aws_key_pair.mainkey.key_name
   user_data = <<EOF
-  #!/bin/bash
-  echo "Port 2022" | sudo tee -a /etc/ssh/sshd_config
-  sudo systemctl restart sshd
-  EOF
+#!/bin/bash
+sudo sed -i 's/#Port 22/Port 2022/g' /etc/ssh/sshd_config
+sudo systemctl restart sshd
+EOF
   tags = {
     "Name" = "BastionHost"
   }

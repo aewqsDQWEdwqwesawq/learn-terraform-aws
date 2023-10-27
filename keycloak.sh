@@ -1,6 +1,5 @@
 #!/bin/bash
-
-echo "Port 2022" | sudo tee -a /etc/ssh/sshd_config
+sudo sed -i 's/#Port 22/Port 2022/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
 ver=21.1.2
