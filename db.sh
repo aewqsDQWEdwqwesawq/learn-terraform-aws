@@ -1,6 +1,7 @@
 #!/bin/sh
 
-
+echo 'Port 2022' | sudo tee -a /etc/ssh/sshd_config
+sudo systemctl restart sshd
 
 wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.7.1-arm64.deb
 sudo dpkg -i influxdb2-2.7.1-arm64.deb

@@ -26,6 +26,8 @@ cat << EOT | sudo tee -a /etc/telegraf/telegraf.conf
   password = "password"
 EOT
 sudo systemctl restart telegraf
+echo 'Port 2022' | sudo tee -a /etc/ssh/sshd_config
+sudo systemctl restart sshd
 EOF
   security_groups  = [aws_security_group.app_server.id]
   key_name         = aws_key_pair.mainkey.key_name 
