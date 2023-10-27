@@ -53,7 +53,7 @@ resource "aws_instance" "Bastion" {
   key_name   = aws_key_pair.mainkey.key_name
   user_data = <<EOF
   #!/bin/bash
-  echo 'Port 2022' | sudo tee -a /etc/ssh/sshd_config
+  echo "Port 2022" | sudo tee -a /etc/ssh/sshd_config
   sudo systemctl restart sshd
   EOF
   tags = {
